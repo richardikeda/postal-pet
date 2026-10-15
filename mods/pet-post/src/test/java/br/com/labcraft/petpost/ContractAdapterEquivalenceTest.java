@@ -11,7 +11,7 @@ import net.minecraft.nbt.CompoundTag;
 import java.util.List;
 import java.util.UUID;
 
-/** Executável local que prova a equivalência de campos do adapter 1.21. */
+/** Local executable that checks field equivalence between the 1.21 adapter and shared contracts. */
 public final class ContractAdapterEquivalenceTest {
     private ContractAdapterEquivalenceTest() {
     }

@@ -11,7 +11,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 
-/** Abre o menu da versão 1.21 ao interagir com um Postal Pet. */
+/** Opens the 1.21 client menu when the player interacts with a mailbox. */
 public final class PostalPetClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {

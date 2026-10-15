@@ -3,13 +3,7 @@ package br.com.labcraft.petpost.contract.persistence;
 import java.util.List;
 import java.util.Objects;
 
-/**
- * Espelho lógico dos campos de um Postal Pet já persistidos pelos adapters.
- *
- * <p>O {@link #storageKey()} reproduz apenas a chave lógica já usada pelos
- * adapters. {@link PostalPetSaveState} usa este record no schema lógico; NBT
- * e Codec continuam sendo responsabilidade dos adapters.</p>
- */
+/** Logical representation of mailbox fields persisted by the adapters. {@link #storageKey()} preserves the existing dimension/position key. {@link PostalPetSaveState} uses this record for the logical schema; NBT and Codec remain adapter responsibilities. */
 public record PostRecord(
         String dimension,
         long position,
@@ -21,7 +15,7 @@ public record PostRecord(
         pets = List.copyOf(Objects.requireNonNull(pets, "pets"));
     }
 
-    /** Chave lógica estável já usada pelos adapters para dimensão e posição. */
+    /** Stable dimension/position key shared by the adapters. */
     public String storageKey() {
         return dimension + "|" + position;
     }

@@ -15,11 +15,7 @@ import net.minecraft.world.entity.Entity;
 
 import java.util.List;
 
-/**
- * Protocolo pontual da lista de pets da tela 1.21. O servidor e somente o
- * servidor cria a resposta; o nonce e a posicao evitam aplicar respostas
- * atrasadas a outro Postal Pet aberto pelo cliente.
- */
+/** On-demand pet-list protocol. Only the server creates responses; the nonce and mailbox position prevent a delayed response from updating another open mailbox. */
 public final class PetListPayloads {
     private static final int MAX_PETS = 32;
     private static final int MAX_TEXT = 96;
@@ -36,7 +32,7 @@ public final class PetListPayloads {
 
     private PetListPayloads() { }
 
-    /** Registra codecs e a unica consulta C2S antes de qualquer conexao de jogo. */
+    /** Registers codecs and the read-only C2S query before game connections are established. */
     public static void register() {
         PayloadTypeRegistry.playC2S().register(REQUEST, REQUEST_CODEC);
         PayloadTypeRegistry.playS2C().register(RESPONSE, RESPONSE_CODEC);
@@ -70,7 +66,7 @@ public final class PetListPayloads {
         });
     }
 
-    /** Confirma ao cliente que a consulta foi recusada, sem revelar dados do posto. */
+    /** Reports a denied query without exposing mailbox data. */
     private static void deny(net.minecraft.server.level.ServerPlayer player, PetListRequest request, ServerLevel level) {
         PetListResponse denied = new PetListResponse(request.position(), request.nonce(),
                 level.dimension().location().toString(), false, List.of());
@@ -130,12 +126,12 @@ public final class PetListPayloads {
         return value == null ? "" : value.length() <= max ? value : value.substring(0, max);
     }
 
-    /** Solicita o instantaneo do posto que a tela acabou de abrir. */
+    /** Requests a snapshot for the mailbox just opened by the screen. */
     public record Request(long position, int nonce) implements CustomPacketPayload {
         @Override public Type<Request> type() { return REQUEST; }
     }
 
-    /** Resposta autorizada ou recusada; a recusa nunca inclui dados do posto. */
+    /** Accepted or denied response; denied responses never include mailbox data. */
     public record Response(long position, int nonce, String dimension, boolean accepted, List<PetView> pets, String postName, int radius) implements CustomPacketPayload {
         public Response(long position, int nonce, String dimension, boolean accepted, List<PetView> pets) {
             this(position, nonce, dimension, accepted, pets, "", 0);
@@ -143,7 +139,7 @@ public final class PetListPayloads {
         @Override public Type<Response> type() { return RESPONSE; }
     }
 
-    /** Dado de apresentacao recebido do servidor; nao aceita mutacoes do cliente. */
+    /** Server-provided presentation data; does not accept client mutations. */
     public record PetView(String name, String type, boolean loaded, String uuid, int entityId, String guideMaterial) {
         public PetView(String name, String type, boolean loaded, String uuid, int entityId) {
             this(name, type, loaded, uuid, entityId, "none");

@@ -3,13 +3,7 @@ package br.com.labcraft.petpost.contract.persistence;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-/**
- * Forma lógica e independente de API do estado persistente do Postal Pet.
- *
- * <p>Os adapters ainda decodificam NBT ou Codec. Este contrato fixa a
- * evolução de versão e protege o mapa dimensão+posição antes que o adapter
- * regrave o estado na versão atual.</p>
- */
+/** API-independent persistent state. Adapters decode NBT or Codec data; this contract validates schema versions and dimension/position keys before the next write. */
 public record PostalPetSaveState(int schemaVersion, Map<String, PostRecord> posts) {
     public static final String SCHEMA_VERSION_FIELD = "schemaVersion";
     public static final int LEGACY_SCHEMA_VERSION = 0;
@@ -25,17 +19,17 @@ public record PostalPetSaveState(int schemaVersion, Map<String, PostRecord> post
         });
     }
 
-    /** Dados sem campo de versão pertencem ao formato legado 0. */
+    /** Data without an explicit version belongs to legacy schema 0. */
     public static PostalPetSaveState legacy(Map<String, PostRecord> posts) {
         return new PostalPetSaveState(LEGACY_SCHEMA_VERSION, posts);
     }
 
-    /** Dados novos sempre são gravados no formato lógico atual. */
+    /** New data is always written using the current logical schema. */
     public static PostalPetSaveState current(Map<String, PostRecord> posts) {
         return new PostalPetSaveState(CURRENT_SCHEMA_VERSION, posts);
     }
 
-    /** Converte uma leitura válida, inclusive a legada, para a próxima gravação. */
+    /** Prepares a valid snapshot, including legacy data, for the next write. */
     public PostalPetSaveState forWrite() {
         return current(posts);
     }
