@@ -13,7 +13,7 @@ import net.minecraft.nbt.NbtOps;
 import java.util.List;
 import java.util.UUID;
 
-/** Executável local que prova a equivalência de campos do adapter 26.2. */
+/** Local executable that checks field equivalence between the 26.2 adapter and shared contracts. */
 public final class ContractAdapterEquivalenceTest {
     private ContractAdapterEquivalenceTest() {
     }

@@ -1,6 +1,6 @@
 package br.com.labcraft.petpost;
 
-/** Regras de raio independentes da API do Minecraft, usadas por todas as versões. */
+/** Minecraft-independent range rules shared by every version adapter. */
 public final class PostRadius {
     private static final int[] VALUES = {8, 16, 24, 32};
 
@@ -28,7 +28,7 @@ public final class PostRadius {
         return bestStep;
     }
 
-    /** O limite horizontal inclui a borda do círculo centrado na caixa. */
+    /** The horizontal boundary includes the edge of the circle centered on the mailbox. */
     public static boolean outsideHorizontalArea(double x, double z, int postX, int postZ, int radius) {
         double dx = x - postX - 0.5;
         double dz = z - postZ - 0.5;

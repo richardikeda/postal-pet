@@ -43,10 +43,7 @@ import net.minecraft.commands.CommandSourceStack;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/**
- * Ponto de entrada do mod: registra o Postal Pet, suas interações, partículas
- * e os sinais sonoros usados para marcar territórios de pets.
- */
+/** Mod entrypoint. Registers the mailbox, interactions, particles and sounds used to mark pet home ranges. */
 public final class PetPost implements ModInitializer {
     public static final String MOD_ID = "petpost";
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
@@ -97,7 +94,7 @@ public final class PetPost implements ModInitializer {
         LOGGER.info("Postal Pet initialized for Minecraft 26.2");
     }
 
-    /** Registra a interação independente de cada Pet Post colocado no mundo. */
+    /** Registers interactions independently for each mailbox placed in the world. */
     private static void registerInteractions() {
         UseBlockCallback.EVENT.register((player, level, hand, hitResult) -> {
             if (hand != InteractionHand.MAIN_HAND) return InteractionResult.PASS;
@@ -129,7 +126,7 @@ public final class PetPost implements ModInitializer {
         });
     }
 
-    /** Registra os comandos novos e mantém `/petpost` como alias legado. */
+    /** Registers the public commands and keeps /petpost as a legacy alias. */
     private static void registerCommands() {
         CommandRegistrationCallback.EVENT.register((dispatcher, context, environment) -> {
             dispatcher.register(commandTree("postalpet"));
@@ -204,7 +201,7 @@ public final class PetPost implements ModInitializer {
         return 1;
     }
 
-    /** Lista o cadastro persistente sem alegar que entidades descarregadas estão presentes. */
+    /** Lists persisted links without claiming that unloaded entities are currently available. */
     private static int listNearestPets(ServerPlayer player) {
         var entry = nearestOwnedPost(player);
         if (entry.isEmpty()) return noNearbyPost(player);
@@ -259,11 +256,7 @@ public final class PetPost implements ModInitializer {
         return 0;
     }
 
-    /**
-     * Fluxo físico do MVP: use uma guia no pet vanilla domesticado junto ao
-     * Postal Pet; agachar com a guia remove o vínculo. A decisão e a posse são
-     * verificadas somente no servidor e nunca procuram entidades por tick.
-     */
+    /** Physical linking flow: use a special guide on an owned, tamed vanilla pet near its mailbox. Sneaking removes the link. Ownership and changes are validated on the server without per-tick entity searches. */
     private static void registerPetBindingInteraction() {
         UseEntityCallback.EVENT.register((player, level, hand, entity, hitResult) -> {
             if (hand != InteractionHand.MAIN_HAND || !isGuide(player.getItemInHand(hand))) return InteractionResult.PASS;
@@ -311,18 +304,18 @@ public final class PetPost implements ModInitializer {
         return stack.is(SILVER_GUIDE) || stack.is(GOLD_GUIDE);
     }
 
-    /** Aceita apenas entidades vanilla domesticáveis com o UUID do dono atual. */
+    /** Accepts only vanilla tameable pets whose current owner UUID matches the player. */
     private static boolean isAuthorizedVanillaPet(Entity entity, ServerPlayer player) {
         return entity instanceof TamableAnimal pet && pet.isTame() && pet.isOwnedBy(player)
                 && "minecraft".equals(BuiltInRegistries.ENTITY_TYPE.getKey(entity.getType()).getNamespace());
     }
 
-    /** Desenha somente para os jogadores próximos o limite do território marcado. */
+    /** Shows the marked home-range boundary only to nearby players. */
     private static void previewTerritory(ServerLevel level, BlockPos center, int radius) {
         TerritoryPreview.start(level, center, radius);
     }
 
-    /** Toca um de três rangidos de madeira sem repetir o som imediatamente anterior. */
+    /** Plays one of three wooden creaks without repeating the previous sound. */
     private static void playWoodCreak(ServerLevel level, BlockPos pos) {
         int choice = level.getRandom().nextInt(WOOD_CREAKS.length);
         if (choice == lastCreakIndex) {

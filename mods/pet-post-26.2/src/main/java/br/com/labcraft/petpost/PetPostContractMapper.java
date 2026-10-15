@@ -6,13 +6,7 @@ import br.com.labcraft.petpost.contract.network.PetListView;
 import br.com.labcraft.petpost.contract.persistence.PetRecord;
 import br.com.labcraft.petpost.contract.persistence.PostRecord;
 
-/**
- * Conversões explícitas da variante 26.2 para os contracts puros do PPCA.
- *
- * <p>O adapter converte somente na fronteira dos casos de uso puros. Codec,
- * codecs de pacote e seus formatos atuais permanecem responsabilidade desta
- * variante.</p>
- */
+/** Explicit conversion between the version adapter and pure PPCA contracts. Conversion happens at use-case boundaries; game serialization and packet codecs remain adapter responsibilities. */
 public final class PetPostContractMapper {
     private PetPostContractMapper() {
     }

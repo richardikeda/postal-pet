@@ -2,7 +2,7 @@ package br.com.labcraft.petpost.application;
 
 import br.com.labcraft.petpost.PostRadius;
 
-/** Calcula a próxima etapa do raio; o adapter continua gravando o BlockState e o SavedData. */
+/** Computes the next range step; the adapter remains responsible for BlockState and SavedData writes. */
 public final class ChangeRadiusUseCase {
     public Result execute(int currentStep) {
         int nextStep = PostRadius.nextStep(currentStep);

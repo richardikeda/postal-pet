@@ -6,7 +6,7 @@ import br.com.labcraft.petpost.contract.network.PetListView;
 import java.util.List;
 import java.util.Objects;
 
-/** Estado efêmero e imutável da lista de pets; nunca é persistido ou enviado. */
+/** Ephemeral, immutable pet-list state; never persisted or sent over the network. */
 public record PostalPetUiState(
         PostalPetScreenView view,
         SnapshotStatus snapshotStatus,
@@ -30,13 +30,13 @@ public record PostalPetUiState(
                 SnapshotStatus.LOADING, 0, -1);
     }
 
-    /** Atualiza somente o contexto da abertura antes de a resposta chegar. */
+    /** Updates only the open-screen context before its response arrives. */
     public PostalPetUiState withExpectedDimension(String dimension) {
         return new PostalPetUiState(new PostalPetScreenView(view.position(), view.nonce(), dimension, view.pets()),
                 snapshotStatus, firstPet, selectedPet);
     }
 
-    /** Respostas de outra abertura, posto ou dimensão não mudam o estado local. */
+    /** Responses for a different screen instance, mailbox or dimension leave local state unchanged. */
     public PostalPetUiState accept(PetListResponse response, int visibleRows) {
         requireVisibleRows(visibleRows);
         if (!view.matches(response)) return this;
@@ -66,11 +66,7 @@ public record PostalPetUiState(
         return new PostalPetUiState(view, snapshotStatus, firstPet, petIndex);
     }
 
-    /**
-     * Seleciona a linha clicada ou retorna ao contexto da caixa quando ela já
-     * estava selecionada. É estado exclusivamente local: não envia nem grava
-     * dados do pet.
-     */
+    /** Selects the clicked pet or returns to mailbox details when it is already selected. Changes only local UI state; no pet data is sent or written. */
     public PostalPetUiState toggleSelection(int petIndex) {
         if (!hasSnapshot() || petIndex < 0 || petIndex >= pets().size()) return this;
         return petIndex == selectedPet
@@ -78,12 +74,12 @@ public record PostalPetUiState(
                 : new PostalPetUiState(view, snapshotStatus, firstPet, petIndex);
     }
 
-    /** Limpa explicitamente o detalhe do pet e mantém a lista/rolagem atual. */
+    /** Clears pet details while keeping the current list and scroll position. */
     public PostalPetUiState clearSelection() {
         return selectedPet < 0 ? this : new PostalPetUiState(view, snapshotStatus, firstPet, -1);
     }
 
-    /** Desloca uma linha, preservando o comportamento de rolagem atual da tela. */
+    /** Scrolls one step while preserving the screen's existing scroll behavior. */
     public PostalPetUiState scroll(boolean towardsStart, int visibleRows) {
         requireVisibleRows(visibleRows);
         if (!hasSnapshot() || pets().size() <= visibleRows) return this;

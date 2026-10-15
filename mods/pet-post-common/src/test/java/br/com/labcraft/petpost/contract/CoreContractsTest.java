@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-/** Testes sem framework e sem APIs Minecraft/Fabric, executados nas duas variantes. */
+/** Framework-free tests without Minecraft/Fabric APIs, executed by both adapters. */
 public final class CoreContractsTest {
     private CoreContractsTest() {
     }
@@ -113,7 +113,7 @@ public final class CoreContractsTest {
             action.run();
             throw new AssertionError("Era esperada IllegalArgumentException");
         } catch (IllegalArgumentException expected) {
-            // Contrato confirmado.
+            // Expected contract violation.
         }
     }
 

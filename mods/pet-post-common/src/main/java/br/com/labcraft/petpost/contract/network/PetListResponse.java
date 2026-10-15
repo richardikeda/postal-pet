@@ -3,7 +3,7 @@ package br.com.labcraft.petpost.contract.network;
 import java.util.List;
 import java.util.Objects;
 
-/** Resposta lógica autorizada ou recusada; uma recusa não deve ter pets. */
+/** Accepted or denied logical response; denied responses must not contain pets. */
 public record PetListResponse(
         long position,
         int nonce,

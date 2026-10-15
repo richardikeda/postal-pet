@@ -2,13 +2,7 @@ package br.com.labcraft.petpost.contract.persistence;
 
 import java.util.UUID;
 
-/**
- * Espelho lógico, sem serialização, de um vínculo persistido de pet.
- *
- * <p>Os adapters continuam responsáveis por converter este formato futuro para
- * NBT (1.21) ou Codec (26.2). A presença deste record ainda não muda nenhuma
- * leitura ou gravação de {@code SavedData}.</p>
- */
+/** Serialization-free representation of a persisted pet link. Adapters convert it to NBT (1.21) or Codec data (26.2); game-specific storage stays outside the shared contract. */
 public record PetRecord(
         UUID uuid,
         String type,

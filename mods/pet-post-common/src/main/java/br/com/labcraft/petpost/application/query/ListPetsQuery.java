@@ -7,10 +7,7 @@ import br.com.labcraft.petpost.contract.port.PetLoadedObservation;
 import java.util.List;
 import java.util.Objects;
 
-/**
- * Projeta os vínculos de um posto já autorizado para a resposta somente-leitura
- * da tela. Não localiza entidades, não grava dados e não força carregamento.
- */
+/** Projects links from an already authorized mailbox into the screen's read-only response. Does not locate entities, write data or force chunk loading. */
 public final class ListPetsQuery {
     private static final int MAX_PETS = 32;
     private static final int MAX_TEXT = 96;

@@ -14,10 +14,7 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 
-/**
- * Bloco direcional da caixa postal, responsável por persistir no próprio mundo
- * o raio escolhido e se a área deste Pet Post já foi marcada.
- */
+/** Directional mailbox block. Stores the selected range and activation state in the world's block state. */
 public final class PetPostBlock extends HorizontalDirectionalBlock {
     public static final MapCodec<PetPostBlock> CODEC = simpleCodec(PetPostBlock::new);
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;

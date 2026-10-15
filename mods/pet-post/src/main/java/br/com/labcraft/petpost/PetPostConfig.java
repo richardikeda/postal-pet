@@ -9,10 +9,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-/**
- * Configuração simples e autocorrigida do Pet Post, salva em JSON para permitir
- * ajustes do servidor sem recompilar o mod.
- */
+/** JSON-backed mailbox configuration. Normalizes invalid values and allows server tuning without recompiling the mod. */
 public final class PetPostConfig {
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
     private static final Path CONFIG_PATH = FabricLoader.getInstance().getConfigDir().resolve("pet-post.json");

@@ -1,5 +1,5 @@
 package br.com.labcraft.petpost.contract.network;
 
-/** Solicitação lógica já representada pelos pacotes específicos de cada adapter. */
+/** Logical request represented by each adapter's version-specific packets. */
 public record PetListRequest(long position, int nonce) {
 }

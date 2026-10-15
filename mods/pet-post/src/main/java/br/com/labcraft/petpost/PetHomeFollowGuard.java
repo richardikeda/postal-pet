@@ -13,7 +13,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.level.block.Blocks;
 
-/** Observa apenas pets vinculados e carregados, sem carregar chunks. */
+/** Tracks only linked, loaded pets without loading chunks. */
 public final class PetHomeFollowGuard {
     private static final Map<ServerLevel, Map<UUID, Tracked>> LOADED = new WeakHashMap<>();
 

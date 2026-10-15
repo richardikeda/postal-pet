@@ -4,7 +4,7 @@ import br.com.labcraft.petpost.contract.persistence.PostRecord;
 
 import java.util.Optional;
 
-/** Normaliza o nome já selecionado pelo adapter, preservando o limite atual de 32 caracteres. */
+/** Normalizes a mailbox name after adapter selection, preserving the 32-character limit. */
 public final class RenamePostUseCase {
     public Optional<PostRecord> execute(PostRecord post, String owner, String requestedName) {
         if (!post.owner().equals(owner)) {

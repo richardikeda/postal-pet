@@ -8,7 +8,7 @@ import br.com.labcraft.petpost.contract.persistence.PostRecord;
 import java.util.List;
 import java.util.UUID;
 
-/** Testes puros dos primeiros casos de uso PPCA, executados nas duas variantes. */
+/** Pure tests for the shared PPCA use cases, executed by both adapters. */
 public final class CoreUseCasesTest {
     private static final String OWNER = "00000000-0000-0000-0000-000000000001";
     private static final String OTHER_OWNER = "00000000-0000-0000-0000-000000000002";

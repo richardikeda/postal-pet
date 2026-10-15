@@ -6,11 +6,7 @@ import br.com.labcraft.petpost.contract.network.PetListView;
 import java.util.List;
 import java.util.Objects;
 
-/**
- * Instantâneo imutável que a tela pode apresentar. A posição, o nonce e a
- * dimensão pertencem ao contexto da abertura e impedem que uma resposta de
- * outra tela se torne visível.
- */
+/** Immutable screen snapshot. Position, nonce and dimension identify the open mailbox and prevent responses for a different screen from being displayed. */
 public record PostalPetScreenView(long position, int nonce, String dimension, List<PetListView> pets) {
     public PostalPetScreenView {
         dimension = Objects.requireNonNull(dimension, "dimension");

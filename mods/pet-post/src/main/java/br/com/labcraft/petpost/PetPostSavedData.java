@@ -19,10 +19,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
-/**
- * Cadastro de postos da versão 1.21. Usa os mesmos campos persistentes da
- * variante 26.2, com o adaptador NBT exigido pela API antiga de SavedData.
- */
+/** Mailbox registry for 1.21. Preserves the logical fields shared with 26.2 while using the NBT adapter required by this SavedData API. */
 public final class PetPostSavedData extends SavedData {
     private static final String FILE_NAME = "petpost_pet_posts";
     private final Map<String, PostEntry> posts = new LinkedHashMap<>();
@@ -132,7 +129,7 @@ public final class PetPostSavedData extends SavedData {
         return Optional.ofNullable(nearest);
     }
 
-    /** Localiza um posto exato na dimensao atual e confirma que ele pertence ao jogador. */
+    /** Finds an exact mailbox in the current dimension and confirms player ownership. */
     public Optional<PostEntry> ownedAt(ServerLevel level, BlockPos pos, UUID owner) {
         PostEntry entry = posts.get(key(level, pos));
         return entry != null && entry.owner().equals(owner.toString()) ? Optional.of(entry) : Optional.empty();
@@ -152,14 +149,14 @@ public final class PetPostSavedData extends SavedData {
                         && post.pets().stream().anyMatch(pet -> pet.uuid().equals(petId))).findFirst();
     }
 
-    /** Expõe um instantâneo de contracts para os casos de uso puros, sem mudar o NBT. */
+    /** Exposes shared-contract snapshots to pure use cases without changing the adapter's serialization format. */
     public List<PostRecord> ownedContracts(UUID owner) {
         String ownerText = owner.toString();
         return posts.values().stream().filter(post -> post.owner().equals(ownerText))
                 .map(PetPostContractMapper::toContract).toList();
     }
 
-    /** Aplica de volta somente o conjunto completo de postos do mesmo dono. */
+    /** Replaces only the complete set of mailboxes owned by the specified player. */
     public boolean replaceOwnedContracts(String owner, List<PostRecord> replacements) {
         Map<String, PostRecord> byKey = new HashMap<>();
         for (PostRecord replacement : replacements) {
@@ -174,7 +171,7 @@ public final class PetPostSavedData extends SavedData {
         return true;
     }
 
-    /** Aplica um único contract já autorizado pelo caso de uso, mantendo a chave lógica atual. */
+    /** Applies one use-case-authorized contract while preserving its logical storage key. */
     public boolean replaceContract(PostRecord replacement) {
         String storageKey = replacement.storageKey();
         PostEntry current = posts.get(storageKey);
@@ -201,14 +198,14 @@ public final class PetPostSavedData extends SavedData {
         return level.dimension().location().toString();
     }
 
-    /** Dados independentes da versão do jogo para um único postal marcado. */
+    /** Version-independent fields for one marked mailbox. */
     public record PostEntry(String dimension, long position, String owner, String name, int radius, List<PetEntry> pets) {
         public BlockPos blockPos() {
             return BlockPos.of(position);
         }
     }
 
-    /** Instantâneo persistente honesto: posição é a do vínculo, não uma alegação de entidade carregada. */
+    /** Persistent snapshot: position refers to the stored link, not a claim that the entity is currently loaded. */
     public record PetEntry(UUID uuid, String type, String name, String lastDimension, long lastPosition, long lastSeen,
                            String guideMaterial) {
         public PetEntry(UUID uuid, String type, String name, String lastDimension, long lastPosition, long lastSeen) {

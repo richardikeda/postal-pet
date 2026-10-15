@@ -11,7 +11,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 
-/** Registra a abertura client-side do menu ao interagir com um Postal Pet. */
+/** Registers client-side menu opening when the player interacts with a mailbox. */
 public final class PostalPetClient implements ClientModInitializer {
     private static PostalPetScreen activeScreen;
 
