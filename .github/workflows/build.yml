@@ -22,7 +22,7 @@ jobs:
         with:
           distribution: temurin
           java-version: ${{ matrix.java }}
-      - uses: gradle/actions/setup-gradle@v4
+      - uses: gradle/actions/setup-gradle@v6
       - name: Build and checks
         working-directory: mods/${{ matrix.project }}
         run: bash gradlew --no-daemon build
