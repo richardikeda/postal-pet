@@ -1,0 +1,29 @@
+name: "Reportar error (Español)"
+description: "Describe un problema reproducible."
+labels: ["bug"]
+body:
+  - type: textarea
+    id: versions
+    attributes:
+      label: "Versiones de Minecraft, Fabric Loader, Fabric API y Postal Pet"
+      description: "Pasos para reproducir"
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: "Comportamiento esperado y observado"
+    validations:
+      required: true
+  - type: textarea
+    id: result
+    attributes:
+      label: "Logs o capturas (elimina datos personales)"
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: "Problema o necesidad"
+    validations:
+      required: false

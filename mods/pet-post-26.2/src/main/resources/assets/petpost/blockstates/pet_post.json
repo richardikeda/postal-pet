@@ -1,0 +1,18 @@
+{
+  "multipart": [
+    { "when": { "facing": "north" }, "apply": { "model": "petpost:block/pet_post" } },
+    { "when": { "facing": "east" },  "apply": { "model": "petpost:block/pet_post", "y": 90 } },
+    { "when": { "facing": "south" }, "apply": { "model": "petpost:block/pet_post", "y": 180 } },
+    { "when": { "facing": "west" },  "apply": { "model": "petpost:block/pet_post", "y": 270 } },
+
+    { "when": { "facing": "north", "flag_raised": "false" }, "apply": { "model": "petpost:block/pet_post_flag_down" } },
+    { "when": { "facing": "east",  "flag_raised": "false" }, "apply": { "model": "petpost:block/pet_post_flag_down", "y": 90 } },
+    { "when": { "facing": "south", "flag_raised": "false" }, "apply": { "model": "petpost:block/pet_post_flag_down", "y": 180 } },
+    { "when": { "facing": "west",  "flag_raised": "false" }, "apply": { "model": "petpost:block/pet_post_flag_down", "y": 270 } },
+
+    { "when": { "facing": "north", "flag_raised": "true" }, "apply": { "model": "petpost:block/pet_post_flag_up" } },
+    { "when": { "facing": "east",  "flag_raised": "true" }, "apply": { "model": "petpost:block/pet_post_flag_up", "y": 90 } },
+    { "when": { "facing": "south", "flag_raised": "true" }, "apply": { "model": "petpost:block/pet_post_flag_up", "y": 180 } },
+    { "when": { "facing": "west",  "flag_raised": "true" }, "apply": { "model": "petpost:block/pet_post_flag_up", "y": 270 } }
+  ]
+}

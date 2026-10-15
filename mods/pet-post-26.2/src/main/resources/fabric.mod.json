@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "id": "petpost",
+  "version": "${version}",
+  "name": "Postal Pet",
+  "description": "Postal Pet ecosystem: give companions a Pet Mailbox, a home, and a visible home range.",
+  "icon": "assets/petpost/icon.png",
+  "authors": ["LabCraft"],
+  "contact": {
+    "homepage": "https://github.com/richardikeda/postal-pet",
+    "sources": "https://github.com/richardikeda/postal-pet",
+    "issues": "https://github.com/richardikeda/postal-pet/issues"
+  },
+  "license": "LGPL-3.0-or-later",
+  "environment": "*",
+  "entrypoints": {
+    "main": ["br.com.labcraft.petpost.PetPost"],
+    "client": ["br.com.labcraft.petpost.client.PostalPetClient"]
+  },
+  "mixins": ["petpost.mixins.json"],
+  "depends": {
+    "fabricloader": ">=0.19.5",
+    "minecraft": "~26.2",
+    "java": ">=25",
+    "fabric-api": ">=${fabric_api_version}"
+  }
+}

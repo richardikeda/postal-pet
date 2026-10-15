@@ -1,0 +1,8 @@
+{
+  "required": true,
+  "package": "br.com.labcraft.petpost.mixin",
+  "mixins": ["FollowOwnerGoalMixin"],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

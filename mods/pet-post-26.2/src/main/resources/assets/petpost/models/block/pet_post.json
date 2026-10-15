@@ -1,0 +1,30 @@
+{
+  "ambientocclusion": true,
+  "textures": {
+    "wood": "minecraft:block/oak_planks",
+    "mailbox_front": "petpost:block/pet_mailbox_front",
+    "post": "minecraft:block/stripped_oak_log",
+    "metal": "minecraft:block/iron_block",
+    "dark_metal": "minecraft:block/polished_blackstone",
+    "flag": "minecraft:block/red_concrete",
+    "slot": "minecraft:block/black_concrete",
+    "paw": "minecraft:block/gray_concrete",
+    "particle": "minecraft:block/oak_planks"
+  },
+  "elements": [
+    { "name": "base", "from": [5, 0, 5], "to": [11, 1, 11], "faces": { "north":{"texture":"#dark_metal"}, "east":{"texture":"#dark_metal"}, "south":{"texture":"#dark_metal"}, "west":{"texture":"#dark_metal"}, "up":{"texture":"#dark_metal"}, "down":{"texture":"#dark_metal"} } },
+    { "name": "post", "from": [6, 1, 6], "to": [10, 9, 10], "faces": { "north":{"texture":"#post"}, "east":{"texture":"#post"}, "south":{"texture":"#post"}, "west":{"texture":"#post"}, "up":{"texture":"#post"}, "down":{"texture":"#post"} } },
+    { "name": "collar", "from": [5.5, 5.5, 5.5], "to": [10.5, 7, 10.5], "faces": { "north":{"texture":"#dark_metal"}, "east":{"texture":"#dark_metal"}, "south":{"texture":"#dark_metal"}, "west":{"texture":"#dark_metal"}, "up":{"texture":"#dark_metal"}, "down":{"texture":"#dark_metal"} } },
+    { "name": "left_brace", "from": [3.5, 7, 6.5], "to": [6, 9, 9.5], "faces": { "north":{"texture":"#post"}, "east":{"texture":"#post"}, "south":{"texture":"#post"}, "west":{"texture":"#post"}, "up":{"texture":"#post"}, "down":{"texture":"#post"} } },
+    { "name": "right_brace", "from": [10, 7, 6.5], "to": [12.5, 9, 9.5], "faces": { "north":{"texture":"#post"}, "east":{"texture":"#post"}, "south":{"texture":"#post"}, "west":{"texture":"#post"}, "up":{"texture":"#post"}, "down":{"texture":"#post"} } },
+    { "name": "mailbox", "from": [2.5, 8, 3.25], "to": [13.5, 15, 12.75], "faces": { "north":{"texture":"#mailbox_front"}, "east":{"texture":"#wood"}, "south":{"texture":"#wood"}, "west":{"texture":"#wood"}, "up":{"texture":"#wood"}, "down":{"texture":"#wood"} } },
+    { "name": "lid", "from": [1.5, 15, 2.5], "to": [14.5, 16, 13.5], "faces": { "north":{"texture":"#metal"}, "east":{"texture":"#metal"}, "south":{"texture":"#metal"}, "west":{"texture":"#metal"}, "up":{"texture":"#metal"}, "down":{"texture":"#metal"} } },
+    { "name": "left_band", "from": [1.75, 8, 2.75], "to": [2.75, 15, 13.25], "faces": { "north":{"texture":"#dark_metal"}, "east":{"texture":"#dark_metal"}, "south":{"texture":"#dark_metal"}, "west":{"texture":"#dark_metal"}, "up":{"texture":"#dark_metal"}, "down":{"texture":"#dark_metal"} } },
+    { "name": "right_band", "from": [13.25, 8, 2.75], "to": [14.25, 15, 13.25], "faces": { "north":{"texture":"#dark_metal"}, "east":{"texture":"#dark_metal"}, "south":{"texture":"#dark_metal"}, "west":{"texture":"#dark_metal"}, "up":{"texture":"#dark_metal"}, "down":{"texture":"#dark_metal"} } },
+    { "name": "mail_slot", "from": [5, 12, 2.4], "to": [11, 13.25, 3], "faces": { "north":{"texture":"#slot"}, "east":{"texture":"#slot"}, "south":{"texture":"#slot"}, "west":{"texture":"#slot"}, "up":{"texture":"#slot"}, "down":{"texture":"#slot"} } },
+    { "name": "paw_pad", "from": [6.5, 9, 2.35], "to": [9.5, 11, 3], "faces": { "north":{"texture":"#paw"}, "east":{"texture":"#paw"}, "south":{"texture":"#paw"}, "west":{"texture":"#paw"}, "up":{"texture":"#paw"}, "down":{"texture":"#paw"} } },
+    { "name": "toe_left", "from": [5, 10.75, 2.35], "to": [6.5, 12, 3], "faces": { "north":{"texture":"#paw"}, "east":{"texture":"#paw"}, "south":{"texture":"#paw"}, "west":{"texture":"#paw"}, "up":{"texture":"#paw"}, "down":{"texture":"#paw"} } },
+    { "name": "toe_middle", "from": [7.25, 11.25, 2.35], "to": [8.75, 12.5, 3], "faces": { "north":{"texture":"#paw"}, "east":{"texture":"#paw"}, "south":{"texture":"#paw"}, "west":{"texture":"#paw"}, "up":{"texture":"#paw"}, "down":{"texture":"#paw"} } },
+    { "name": "toe_right", "from": [9.5, 10.75, 2.35], "to": [11, 12, 3], "faces": { "north":{"texture":"#paw"}, "east":{"texture":"#paw"}, "south":{"texture":"#paw"}, "west":{"texture":"#paw"}, "up":{"texture":"#paw"}, "down":{"texture":"#paw"} } }
+  ]
+}

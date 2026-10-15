@@ -1,0 +1,12 @@
+{
+  "textures": {
+    "metal": "minecraft:block/polished_blackstone",
+    "flag": "minecraft:block/red_concrete",
+    "particle": "minecraft:block/red_concrete"
+  },
+  "elements": [
+    { "name": "flag_mount", "from": [14, 10, 7], "to": [15.5, 12, 9], "faces": { "north":{"texture":"#metal"}, "east":{"texture":"#metal"}, "south":{"texture":"#metal"}, "west":{"texture":"#metal"}, "up":{"texture":"#metal"}, "down":{"texture":"#metal"} } },
+    { "name": "lowered_pole", "from": [14.4, 10.6, 4], "to": [15.1, 11.3, 8.2], "faces": { "north":{"texture":"#flag"}, "east":{"texture":"#flag"}, "south":{"texture":"#flag"}, "west":{"texture":"#flag"}, "up":{"texture":"#flag"}, "down":{"texture":"#flag"} } },
+    { "name": "lowered_flag", "from": [14.35, 8.8, 2], "to": [15.15, 11.3, 5], "faces": { "north":{"texture":"#flag"}, "east":{"texture":"#flag"}, "south":{"texture":"#flag"}, "west":{"texture":"#flag"}, "up":{"texture":"#flag"}, "down":{"texture":"#flag"} } }
+  ]
+}

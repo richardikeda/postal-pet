@@ -1,0 +1,58 @@
+name: Draft release
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Existing release tag (example: v0.5.3)'
+        required: true
+        type: string
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - project: pet-post
+            java: '21'
+          - project: pet-post-26.2
+            java: '25'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.tag }}
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: ${{ matrix.java }}
+      - uses: gradle/actions/setup-gradle@v4
+      - run: bash gradlew --no-daemon build
+        working-directory: mods/${{ matrix.project }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.project }}
+          path: mods/${{ matrix.project }}/build/libs/*.jar
+          if-no-files-found: error
+  draft:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    environment: release
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.tag }}
+      - uses: actions/download-artifact@v4
+        with:
+          path: release-files
+          merge-multiple: true
+      - name: Checksums and draft
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ inputs.tag }}
+        run: |
+          cd release-files
+          sha256sum *.jar > SHA256SUMS
+          gh release create "$RELEASE_TAG" *.jar SHA256SUMS --verify-tag --draft --title "Postal Pet $RELEASE_TAG" --notes "See docs/testing.md for validation status. Select the JAR matching your Minecraft version."

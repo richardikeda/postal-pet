@@ -1,0 +1,29 @@
+name: "Relatar bug (Português do Brasil)"
+description: "Relate um problema reproduzível."
+labels: ["bug"]
+body:
+  - type: textarea
+    id: versions
+    attributes:
+      label: "Versões de Minecraft, Fabric Loader, Fabric API e Postal Pet"
+      description: "Passos para reproduzir"
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: "Comportamento esperado e observado"
+    validations:
+      required: true
+  - type: textarea
+    id: result
+    attributes:
+      label: "Logs ou capturas (remova dados pessoais)"
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: "Problema ou necessidade"
+    validations:
+      required: false

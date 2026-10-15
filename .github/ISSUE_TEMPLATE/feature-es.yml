@@ -1,0 +1,16 @@
+name: "Solicitar función (Español)"
+description: "Sugiere una mejora."
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: need
+    attributes:
+      label: "Comportamiento propuesto y alternativas"
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: "undefined"
+    validations:
+      required: true

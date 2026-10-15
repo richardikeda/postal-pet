@@ -1,0 +1,16 @@
+name: "Solicitar recurso (Português do Brasil)"
+description: "Sugira uma melhoria."
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: need
+    attributes:
+      label: "Comportamento proposto e alternativas"
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: "undefined"
+    validations:
+      required: true

@@ -1,0 +1,29 @@
+name: "Bug report (English)"
+description: "Report a reproducible problem."
+labels: ["bug"]
+body:
+  - type: textarea
+    id: versions
+    attributes:
+      label: "Minecraft, Fabric Loader, Fabric API and Postal Pet versions"
+      description: "Reproduction steps"
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: "Expected and actual behavior"
+    validations:
+      required: true
+  - type: textarea
+    id: result
+    attributes:
+      label: "Logs or screenshots (remove personal data)"
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: "Problem or need"
+    validations:
+      required: false

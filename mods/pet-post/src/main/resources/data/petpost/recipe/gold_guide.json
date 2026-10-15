@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": ["SS ", "SMN", "  S"],
+  "key": {
+    "S": { "item": "minecraft:string" },
+    "M": { "item": "minecraft:slime_ball" },
+    "N": { "item": "minecraft:gold_nugget" }
+  },
+  "result": { "id": "petpost:gold_guide", "count": 2 }
+}

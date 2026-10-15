@@ -1,0 +1,163 @@
+plugins {
+    id 'net.fabricmc.fabric-loom' version "${loom_version}"
+    id 'maven-publish'
+}
+
+version = project.mod_version
+group = project.maven_group
+
+base { archivesName = project.archive_base_name }
+
+sourceSets.main.java.srcDir('../pet-post-common/src/main/java')
+sourceSets.main.resources.srcDir('../pet-post-common/src/main/resources')
+sourceSets.test.java.srcDir('../pet-post-common/src/test/java')
+
+dependencies {
+    minecraft "com.mojang:minecraft:${project.minecraft_version}"
+    implementation "net.fabricmc:fabric-loader:${project.loader_version}"
+    implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
+}
+
+processResources {
+    inputs.properties version: project.version, fabric_api_version: project.fabric_api_version
+    filesMatching('fabric.mod.json') {
+        expand version: project.version, fabric_api_version: project.fabric_api_version
+    }
+}
+
+def licenseFile = file('../../LICENSE')
+def noticeFile = file('../../NOTICE')
+if (!licenseFile.isFile() || !noticeFile.isFile()) {
+    throw new GradleException('LICENSE e NOTICE da raiz do LabCraft são obrigatórios para empacotar o Postal Pet.')
+}
+
+tasks.named('jar') {
+    preserveFileTimestamps = false
+    reproducibleFileOrder = true
+    from(licenseFile) { rename { 'LICENSE' } }
+    from(noticeFile) { rename { 'NOTICE' } }
+    from('../../COPYING')
+    from('../../COPYING.LESSER')
+}
+
+tasks.withType(JavaCompile).configureEach { it.options.release = 25 }
+
+tasks.named('test') {
+    failOnNoDiscoveredTests = false
+}
+
+def commonCoreSources = fileTree('../pet-post-common/src/main/java') {
+    include '**/*.java'
+}
+def clientPresentationSources = fileTree('src/main/java/br/com/labcraft/petpost/client') {
+    include '**/*.java'
+}
+def listPayloadSource = file('src/main/java/br/com/labcraft/petpost/PetListPayloads.java')
+
+tasks.register('verifyCommonCoreBoundary') {
+    group = 'verification'
+    description = 'Falha se o núcleo compartilhado importar Minecraft ou Fabric.'
+    inputs.files(commonCoreSources)
+    doLast {
+        def violations = []
+        commonCoreSources.each { source ->
+            int lineNumber = 0
+            source.eachLine('UTF-8') { line ->
+                lineNumber++
+                if (line ==~ /^\s*import\s+net\.(minecraft|fabricmc)\..*$/) {
+                    violations << "${source}:${lineNumber}: ${line.trim()}"
+                }
+            }
+        }
+        if (!violations.isEmpty()) {
+            throw new GradleException("Imports proibidos no core comum:\n${violations.join('\n')}")
+        }
+    }
+}
+
+tasks.register('verifyPpcaAdapterBoundaries') {
+    group = 'verification'
+    description = 'Protege a apresentação cliente e o fluxo de consulta somente-leitura da PPCA.'
+    inputs.files(clientPresentationSources, listPayloadSource)
+    doLast {
+        def violations = []
+        clientPresentationSources.each { source ->
+            int lineNumber = 0
+            source.eachLine('UTF-8') { line ->
+                lineNumber++
+                if (line ==~ /^\s*import\s+br\.com\.labcraft\.petpost\.PetPostSavedData\s*;\s*$/ ||
+                        line ==~ /^\s*import\s+net\.minecraft\.server\..*;\s*$/) {
+                    violations << "${source}:${lineNumber}: import de persistência/servidor proibido no cliente"
+                }
+            }
+        }
+
+        def payloadImports = []
+        listPayloadSource.eachLine('UTF-8') { line ->
+            def matcher = line =~ /^\s*import\s+([^;]+);\s*$/
+            if (matcher.matches()) payloadImports << matcher.group(1)
+        }
+        def requiredPayloadImports = [
+                'br.com.labcraft.petpost.application.query.ListPetsQuery',
+                'br.com.labcraft.petpost.contract.network.PetListRequest',
+                'br.com.labcraft.petpost.contract.network.PetListResponse'
+        ]
+        requiredPayloadImports.each { required ->
+            if (!payloadImports.contains(required)) {
+                violations << "${listPayloadSource}: import PPCA obrigatório ausente: ${required}"
+            }
+        }
+        payloadImports.findAll { it.startsWith('br.com.labcraft.petpost.application.') &&
+                it != 'br.com.labcraft.petpost.application.query.ListPetsQuery' }.each { forbidden ->
+            violations << "${listPayloadSource}: caso de uso mutável não é permitido no payload de listagem: ${forbidden}"
+        }
+
+        if (!violations.isEmpty()) {
+            throw new GradleException("Fronteiras PPCA do adapter violadas:\n${violations.join('\n')}")
+        }
+    }
+}
+
+tasks.register('testCommonCore', JavaExec) {
+    group = 'verification'
+    description = 'Executa os contratos puros compartilhados.'
+    dependsOn tasks.named('testClasses')
+    classpath = sourceSets.test.runtimeClasspath
+    mainClass = 'br.com.labcraft.petpost.contract.CoreContractsTest'
+}
+
+tasks.register('testAdapterContractEquivalence', JavaExec) {
+    group = 'verification'
+    description = 'Confere a equivalência entre records do adapter 26.2 e contracts puros.'
+    dependsOn tasks.named('testClasses')
+    classpath = sourceSets.test.runtimeClasspath
+    mainClass = 'br.com.labcraft.petpost.ContractAdapterEquivalenceTest'
+}
+
+tasks.named('check') {
+    dependsOn tasks.named('verifyCommonCoreBoundary')
+    dependsOn tasks.named('verifyPpcaAdapterBoundaries')
+    dependsOn tasks.named('testCommonCore')
+    dependsOn tasks.named('testAdapterContractEquivalence')
+}
+
+java {
+    withSourcesJar()
+    sourceCompatibility = JavaVersion.VERSION_25
+    targetCompatibility = JavaVersion.VERSION_25
+}
+
+tasks.named('sourcesJar') {
+    preserveFileTimestamps = false
+    reproducibleFileOrder = true
+    from(licenseFile) { rename { 'LICENSE' } }
+    from(noticeFile) { rename { 'NOTICE' } }
+    from('../../COPYING')
+    from('../../COPYING.LESSER')
+}
+
+publishing {
+    publications {
+        create('mavenJava', MavenPublication) { from components.java }
+    }
+}

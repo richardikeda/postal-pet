@@ -1,0 +1,11 @@
+.gradle/
+**/build/
+**/run/
+*.log
+.idea/
+.vscode/
+*.iml
+*.zip
+*.7z
+*.mca
+*.dat

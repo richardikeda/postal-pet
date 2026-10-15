@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": ["IRI", "PCP", " F "],
+  "key": {
+    "I": "minecraft:iron_ingot",
+    "R": "minecraft:redstone_torch",
+    "P": "minecraft:oak_planks",
+    "C": "minecraft:chest",
+    "F": "minecraft:oak_fence"
+  },
+  "result": {
+    "id": "petpost:pet_post",
+    "count": 1
+  }
+}

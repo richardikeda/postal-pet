@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "maintained": [
+    {
+      "minecraft": "1.21",
+      "project": "pet-post",
+      "java": 21,
+      "loader": "0.19.5",
+      "fabricApi": "0.102.0+1.21"
+    },
+    {
+      "minecraft": "26.2",
+      "project": "pet-post-26.2",
+      "java": 25,
+      "loader": "0.19.5",
+      "fabricApi": "0.160.0+26.2"
+    }
+  ]
+}
